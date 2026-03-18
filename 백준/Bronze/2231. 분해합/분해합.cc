@@ -1,32 +1,32 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
-int N;
-int result;
-int tmp;
-
-// 0부터 늘려가면서
-// 분해합이 N이 되는지를체크
 int main()
 {
-
+    int N;
     cin >> N;
-    for (int i = 1; i < N; i++)
-    {
-        tmp = i;
-        int j = i;
-        while (j > 0)
-        {
-            tmp += j % 10;
-            j /= 10;
-        }
 
-        if (tmp == N)
+    int result = 0;
+
+    // 각 자릿수의 합이 최대 9 * 6자리를 넘지 않으므로 범위를 최적화할 수 있음!
+    for (int i = max(1, N - 54); i < N; i++)
+    {
+        int sum = i;
+        int num = i;
+
+        while (num > 0)
+        {
+            sum += num % 10;
+            num /= 10;
+        }
+        if (sum == N)
         {
             result = i;
             break;
         }
     }
 
-    cout << result;
+    cout << result << endl;
+    return 0;
 }
