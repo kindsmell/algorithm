@@ -1,21 +1,28 @@
-#include <string>
 #include <vector>
+#include <stack>
 
 using namespace std;
 
 vector<int> solution(vector<int> prices) {
-    vector<int> answer;
+    int n = prices.size();
+    vector<int> answer(n);
+    stack<int> s;
     
-    for(int i = 0; i < prices.size(); i++)
+    for(int i = 0; i < n; i++)
     {
-        int cur = prices[i];
-        int cnt  = 0;
-        for(int j = i + 1; j < prices.size(); j++)
+        while(!s.empty() && prices[s.top()] > prices[i])
         {
-            cnt++;
-            if(cur > prices[j]) break;
+            answer[s.top()] = i - s.top();
+            s.pop();
         }
-        answer.push_back(cnt);
+        s.push(i);
     }
+    
+    while(!s.empty())
+    {
+        answer[s.top()] = n - 1 - s.top();
+        s.pop();
+    }
+    
     return answer;
 }
